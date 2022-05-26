@@ -21,7 +21,7 @@
   "license": "Apache 2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Niyati3009/supply-chain-network.git"
+    "url": "https://github.com/Niyati3009/bc-supply-chain-network.git"
   },
   "scripts": {
     "deploy": "./scripts/deploy.sh",
