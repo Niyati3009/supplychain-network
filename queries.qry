@@ -1,0 +1,47 @@
+//This is the query file for the assets and participants 
+
+  
+
+  
+
+query Q1 { 
+
+description: "Select all commodties" 
+
+statement: SELECT org.supplychain.network.Commodity 
+
+} 
+
+  
+
+  
+
+query Q2 { 
+
+description: "Select all Manufacturers" 
+
+statement: SELECT org.supplychain.network.Manufacturer 
+
+} 
+
+    
+
+query Q3 { 
+
+description: "Select all Distributors" 
+
+statement: SELECT org.supplychain.network.Distributor 
+
+} 
+
+  
+
+query Q4 { 
+
+description: "Select all Retailers" 
+
+statement: SELECT org.supplychain.network.Retailer 
+
+} 
+
+ 
