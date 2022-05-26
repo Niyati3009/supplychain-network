@@ -1,0 +1,137 @@
+/* 
+
+* Licensed under the Apache License, Version 2.0 (the "License"); 
+
+* you may not use this file except in compliance with the License. 
+
+* You may obtain a copy of the License at 
+
+* 
+
+* http://www.apache.org/licenses/LICENSE-2.0 
+
+* 
+
+* Unless required by applicable law or agreed to in writing, software 
+
+* distributed under the License is distributed on an "AS IS" BASIS, 
+
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+
+* See the License for the specific language governing permissions and 
+
+* limitations under the License. 
+
+*/ 
+
+  
+
+namespace org.supplychain.network 
+
+concept Address { 
+
+o String city optional 
+
+o String country optional 
+
+} 
+
+  
+
+abstract participant Trader { 
+
+o String companyName 
+
+o Address address 
+
+} 
+
+  
+
+participant Manufacturer identified by tradeId extends Trader { 
+
+o String tradeId  
+
+} 
+
+  
+
+participant Distributor identified by tradeId extends Trader { 
+
+o String tradeId  
+
+} 
+
+participant Retailer identified by tradeId extends Trader { 
+
+o String tradeId  
+
+} 
+
+  
+
+  
+
+concept Trace { 
+
+o DateTime timestamp 
+
+o Address location 
+
+--> Trader company 
+
+} 
+
+  
+
+asset Commodity identified by commodityid { 
+
+o String commodityid 
+
+o String name 
+
+o String description 
+
+o Double quantity 
+
+o Double unitPrice optional 
+
+o Double totalPrice optional 
+
+o Trace[] trace 
+
+--> Trader owner optional 
+
+--> Trader issuer optional 
+
+} 
+
+  
+
+  
+
+enum OrderStatus { 
+
+o INITIATED 
+
+o CONFIRMED 
+
+o DELIVERING 
+
+o DELIVERED 
+
+} 
+
+  
+
+transaction TransferCommodity { 
+
+--> Commodity commodity 
+
+--> Trader issuer 
+
+--> Trader newOwner 
+
+o Address shipperLocation 
+
+} 
