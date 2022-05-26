@@ -1,0 +1,36 @@
+{
+  "name": "supplychain-network",
+  "author": "author",
+  "description": "Supply chain network for the tracking of goods",
+  "version": "0.0.2-deploy.11",
+  "devDependencies": {
+    "browserfs": "^1.2.0",
+    "chai": "^3.5.0",
+    "composer-admin": "0.20.2",
+    "composer-cli": "0.20.2",
+    "composer-client": "0.20.2",
+    "composer-connector-embedded": "0.20.2",
+    "eslint": "^3.6.1",
+    "istanbul": "^0.4.5",
+    "jsdoc": "^3.4.1",
+    "mkdirp": "^0.5.1",
+    "mocha": "^3.2.0",
+    "moment": "^2.19.3"
+  },
+  "keywords": [],
+  "license": "Apache 2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Niyati3009/supply-chain-network.git"
+  },
+  "scripts": {
+    "deploy": "./scripts/deploy.sh",
+    "doc": "jsdoc --pedantic --recurse -c jsdoc.conf",
+    "lint": "eslint .",
+    "postlicchk": "npm run doc",
+    "postlint": "npm run licchk",
+    "prepublish": "mkdirp ./dist && composer archive create  --sourceType dir --sourceName . -a ./dist/supplychain-network.bna",
+    "pretest": "npm run lint",
+    "test": "mocha --recursive"
+  }
+}
