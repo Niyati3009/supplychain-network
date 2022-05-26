@@ -1,5 +1,5 @@
 {
-  "name": "supplychain-network",
+  "name": "bc-supply-chain-network",
   "author": "author",
   "description": "Supply chain network for the tracking of goods",
   "version": "0.0.2.11",
@@ -29,7 +29,7 @@
     "lint": "eslint .",
     "postlicchk": "npm run doc",
     "postlint": "npm run licchk",
-    "prepublish": "mkdirp ./dist && composer archive create  --sourceType dir --sourceName . -a ./dist/supplychain-network.bna",
+    "prepublish": "mkdirp ./dist && composer archive create  --sourceType dir --sourceName . -a ./dist/bc-supply-chain-network.bna",
     "pretest": "npm run lint",
     "test": "mocha --recursive"
   }
