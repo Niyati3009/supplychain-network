@@ -2,7 +2,7 @@
   "name": "bc-supply-chain-network",
   "author": "author",
   "description": "Supply chain network for the tracking of goods",
-  "version": "0.0.2.11",
+  "version": "1.0.0",
   "devDependencies": {
     "browserfs": "^1.2.0",
     "chai": "^3.5.0",
