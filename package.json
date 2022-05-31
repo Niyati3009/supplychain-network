@@ -1,5 +1,5 @@
 {
-  "name": "bc-supplychain-network",
+  "name": "supplychain-network",
   "author": "author",
   "description": "Supply chain network for the tracking of goods",
   "version": "1.0.0",
@@ -21,7 +21,7 @@
   "license": "Apache 2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Niyati3009/bc-supplychain-network.git"
+    "url": "https://github.com/Niyati3009/supplychain-network.git"
   },
   "scripts": {
     "deploy": "./scripts/deploy.sh",
@@ -29,7 +29,7 @@
     "lint": "eslint .",
     "postlicchk": "npm run doc",
     "postlint": "npm run licchk",
-    "prepublish": "mkdirp ./dist && composer archive create  --sourceType dir --sourceName . -a ./dist/bc-supplychain-network.bna",
+    "prepublish": "mkdirp ./dist && composer archive create  --sourceType dir --sourceName . -a ./dist/supplychain-network.bna",
     "pretest": "npm run lint",
     "test": "mocha --recursive"
   }
