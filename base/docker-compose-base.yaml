@@ -32,35 +32,35 @@ services:
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/bosch.sc.com/peers/peer0.bosch.sc.com/msp:/etc/hyperledger/fabric/msp
-        - ../crypto-config/peerOrganizations/intel.loc.com/peers/peer0.intel.loc.com/tls:/etc/hyperledger/fabric/tls
-        - peer0.intel.loc.com:/var/hyperledger/production
+        - ../crypto-config/peerOrganizations/bosch.sc.com/peers/peer0.bosch.sc.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.bosch.sc.com:/var/hyperledger/production
     ports:
       - 7051:7051
  
-  peer1.intel.loc.com:
-    container_name: peer1.intel.loc.com
+  peer1.bosch.sc.com:
+    container_name: peer1.bosch.loc.com
     extends:
       file: peer-base.yaml
       service: peer-base
     environment:
-      - CORE_PEER_ID=peer1.intel.loc.com
-      - CORE_PEER_ADDRESS=peer1.intel.loc.com:8051
+      - CORE_PEER_ID=peer1.bosch.sc.com
+      - CORE_PEER_ADDRESS=peer1.bosch.sc.com:8051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
-      - CORE_PEER_CHAINCODEADDRESS=peer1.intel.loc.com:8052
+      - CORE_PEER_CHAINCODEADDRESS=peer1.bosch.sc.com:8052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.intel.loc.com:8051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.intel.loc.com:7051
-      - CORE_PEER_LOCALMSPID=IntelMSP
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.bosch.sc.com:8051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.bosch.sc.com:7051
+      - CORE_PEER_LOCALMSPID=BoschMSP
     volumes:
         - /var/run/:/host/var/run/
-        - ../crypto-config/peerOrganizations/intel.loc.com/peers/peer1.intel.loc.com/msp:/etc/hyperledger/fabric/msp
-        - ../crypto-config/peerOrganizations/intel.loc.com/peers/peer1.intel.loc.com/tls:/etc/hyperledger/fabric/tls
-        - peer1.intel.loc.com:/var/hyperledger/production
+        - ../crypto-config/peerOrganizations/bosch.sc.com/peers/peer1.bosch.sc.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/bosch.sc.com/peers/peer1.bosch.sc.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.bosch.sc.com:/var/hyperledger/production
  
     ports:
       - 8051:8051
  
-  peer0.lenovo.loc.com:
+  peer0.f.loc.com:
     container_name: peer0.lenovo.loc.com
     extends:
       file: peer-base.yaml
