@@ -1,0 +1,156 @@
+volumes:
+  orderer.loc.com:
+  peer0.intel.loc.com:
+  peer1.intel.loc.com:
+  peer0.lenovo.loc.com:
+  peer1.lenovo.loc.com:
+  peer0.fedex.loc.com:
+  peer1.fedex.loc.com:
+  peer0.govregulator.loc.com:
+  peer1.govregulator.loc.com:
+ 
+networks:
+  loc:
+ 
+services:
+ 
+  orderer.loc.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer.loc.com
+    container_name: orderer.loc.com
+    networks:
+      - loc
+ 
+  peer0.intel.loc.com:
+    container_name: peer0.intel.loc.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.intel.loc.com
+    networks:
+      - loc
+ 
+  peer1.intel.loc.com:
+    container_name: peer1.intel.loc.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.intel.loc.com
+    networks:
+      - loc
+ 
+  peer0.lenovo.loc.com:
+    container_name: peer0.lenovo.loc.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.lenovo.loc.com
+    networks:
+      - loc
+ 
+  peer1.lenovo.loc.com:
+    container_name: peer1.lenovo.loc.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.lenovo.loc.com
+    networks:
+      - loc
+ 
+  peer0.fedex.loc.com:
+    container_name: peer0.fedex.loc.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.fedex.loc.com
+    networks:
+      - loc
+ 
+  peer1.fedex.loc.com:
+    container_name: peer1.fedex.loc.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.fedex.loc.com
+    networks:
+      - loc
+ 
+  peer0.govregulator.loc.com:
+    container_name: peer0.govregulator.loc.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.govregulator.loc.com
+    networks:
+      - loc
+ 
+  peer1.govregulator.loc.com:
+    container_name: peer1.govregulator.loc.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.govregulator.loc.com
+    networks:
+      - loc
+  
+  cli:
+    container_name: cli
+    image: hyperledger/fabric-tools:$IMAGE_TAG
+    tty: true
+    stdin_open: true
+    environment:
+      - SYS_CHANNEL=$SYS_CHANNEL
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.intel.loc.com:7051
+      - CORE_PEER_LOCALMSPID=IntelMSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/intel.loc.com/peers/peer0.intel.loc.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/intel.loc.com/peers/peer0.intel.loc.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/intel.loc.com/peers/peer0.intel.loc.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/intel.loc.com/users/Admin@intel.loc.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./../chaincode/:/opt/gopath/src/github.com/chaincode
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - orderer.loc.com
+      - peer0.intel.loc.com
+      - peer1.intel.loc.com
+      - peer0.lenovo.loc.com
+      - peer1.lenovo.loc.com
+      - peer0.fedex.loc.com
+      - peer1.fedex.loc.com
+      - peer0.govregulator.loc.com
+      - peer1.govregulator.loc.com
+    networks:
+      - loc
+ 
+  chaincode:
+    container_name: chaincode
+    image: hyperledger/fabric-ccenv
+    tty: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_ID=chaincode
+      - CORE_PEER_ADDRESS=peer0.intel.loc.com:7051
+      - CORE_PEER_LOCALMSPID=IntelMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
+    working_dir: /opt/gopath/src/chaincode
+    command: /bin/sh -c 'sleep 6000000'
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./msp:/etc/hyperledger/msp
+        - ./../chaincode:/opt/gopath/src/chaincode
+    depends_on:
+      - orderer.loc.com
+      - peer0.intel.loc.com
+      - peer1.intel.loc.com
+      - peer0.lenovo.loc.com
+      - peer1.lenovo.loc.com
+      - peer0.fedex.loc.com
+      - peer1.fedex.loc.com
+      - peer0.govregulator.loc.com
+      - peer1.govregulator.loc.com
