@@ -61,41 +61,41 @@ services:
       - 8051:8051
  
   peer0.fedex.sc.com:
-    container_name: peer0.lenovo.loc.com
+    container_name: peer0.fedex.sc.com
     extends:
       file: peer-base.yaml
       service: peer-base
     environment:
-      - CORE_PEER_ID=peer0.lenovo.loc.com
-      - CORE_PEER_ADDRESS=peer0.lenovo.loc.com:9051
+      - CORE_PEER_ID=peer0.fedex.sc.com
+      - CORE_PEER_ADDRESS=peer0.fedex.sc.com:9051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.lenovo.loc.com:9052
+      - CORE_PEER_CHAINCODEADDRESS=peer0.fedex.sc.com:9052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.lenovo.loc.com:9051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.lenovo.loc.com:10051
-      - CORE_PEER_LOCALMSPID=LenovoMSP
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.fedex.sc.com:9051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.fedex.sc.com:10051
+      - CORE_PEER_LOCALMSPID=FedExMSP
     volumes:
         - /var/run/:/host/var/run/
-        - ../crypto-config/peerOrganizations/lenovo.loc.com/peers/peer0.lenovo.loc.com/msp:/etc/hyperledger/fabric/msp
-        - ../crypto-config/peerOrganizations/lenovo.loc.com/peers/peer0.lenovo.loc.com/tls:/etc/hyperledger/fabric/tls
-        - peer0.lenovo.loc.com:/var/hyperledger/production
+        - ../crypto-config/peerOrganizations/fedex.sc.com/peers/peer0.fedex.sc.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/fedex.sc.com/peers/peer0.fedex.sc.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.fedex.sc.com:/var/hyperledger/production
     ports:
       - 9051:9051
  
-  peer1.lenovo.loc.com:
-    container_name: peer1.lenovo.loc.com
+  peer1.fedex.sc.com:
+    container_name: peer1.fedex.sc.com
     extends:
       file: peer-base.yaml
       service: peer-base
     environment:
-      - CORE_PEER_ID=peer1.lenovo.loc.com
-      - CORE_PEER_ADDRESS=peer1.lenovo.loc.com:10051
+      - CORE_PEER_ID=peer1.fedex.sc.com
+      - CORE_PEER_ADDRESS=peer1.fedex.sc.com:10051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:10051
-      - CORE_PEER_CHAINCODEADDRESS=peer1.lenovo.loc.com:10052
+      - CORE_PEER_CHAINCODEADDRESS=peer1.fedex.sc.com:10052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10052
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.lenovo.loc.com:10051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.lenovo.loc.com:9051
-      - CORE_PEER_LOCALMSPID=LenovoMSP
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.fedex.sc.com:10051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.fedex.sc.com:9051
+      - CORE_PEER_LOCALMSPID=FedExMSP
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/lenovo.loc.com/peers/peer1.lenovo.loc.com/msp:/etc/hyperledger/fabric/msp
