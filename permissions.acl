@@ -78,11 +78,11 @@ rule ReadCommodity {
 
    	description: "All participants can read their own goods" 
 
-    participant(p): "org.bc.supplychain.network.*" 
+    participant(p): "org.supplychain.network.*" 
 
     operation: READ 
 
-    resource(r): "org.bc.supplychain.network.Commodity" 
+    resource(r): "org.supplychain.network.Commodity" 
 
   	condition: (r.owner.getIdentifier() == p.getIdentifier()) 
 
@@ -96,11 +96,11 @@ rule CreateTransferCommodity {
 
    	description: "All participants can access TransferCommodity transaction" 
 
-    participant: "org.bc.supplychain.network.*" 
+    participant: "org.supplychain.network.*" 
 
     operation: CREATE 
 
-    resource: "org.bc.supplychain.network.TransferCommodity" 
+    resource: "org.supplychain.network.TransferCommodity" 
 
     action: ALLOW 
 
@@ -112,13 +112,13 @@ rule OnlyTransferByTransferCommodity {
 
    	description: "Allow all participants to transfer its own commodity by TransferCommodity" 
 
-    participant(p): "org.bc.supplychain.network.*" 
+    participant(p): "org.supplychain.network.*" 
 
     operation: UPDATE 
 
-    resource(r): "org.bc.supplychain.network.*" 
+    resource(r): "org.supplychain.network.*" 
 
-  	transaction(tx): "org.bc.supplychain.network.TransferCommodity" 
+  	transaction(tx): "org.supplychain.network.TransferCommodity" 
 
   	condition: (r.owner.getIdentifier() == p.getIdentifier()) 
 
@@ -132,11 +132,11 @@ rule ReadOwnTransactionRecords {
 
    	description: "Grant all participants to read their own transaction records" 
 
-    participant(p): "org.bc.supplychain.network.*" 
+    participant(p): "org.supplychain.network.*" 
 
     operation: READ 
 
-    resource(r): "org.bc.supplychain.network.TransferCommodity" 
+    resource(r): "org.supplychain.network.TransferCommodity" 
 
   	condition: (r.issuer.getIdentifier() == p.getIdentifier()) 
 
@@ -150,11 +150,11 @@ rule ReadOwnTransactionRecordsNewOwner {
 
    	description: "Grant new owner to read their own transaction records" 
 
-    participant(p): "org.bc.supplychain.network.*" 
+    participant(p): "org.supplychain.network.*" 
 
     operation: READ 
 
-    resource(r): "org.bc.supplychain.network.TransferCommodity" 
+    resource(r): "org.supplychain.network.TransferCommodity" 
 
   	condition: (r.newOwner.getIdentifier() == p.getIdentifier()) 
 
@@ -168,11 +168,11 @@ rule CreateOwnResource {
 
    	description: "Grant all partcipants to create its own resource" 
 
-    participant(p): "org.bc.supplychain.network.*" 
+    participant(p): "org.supplychain.network.*" 
 
     operation: CREATE 
 
-    resource(r): "org.bc.supplychain.network.Commodity" 
+    resource(r): "org.supplychain.network.Commodity" 
 
   	condition: (r.owner.getIdentifier() == p.getIdentifier()) 
 
