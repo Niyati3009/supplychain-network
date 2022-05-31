@@ -247,7 +247,7 @@ Orderer: &OrdererDefaults
     OrdererType: solo
  
     Addresses:
-        - orderer.loc.com:7050
+        - orderer.sc.com:7050
  
     # Batch Timeout: The amount of time to wait before creating a batch
     BatchTimeout: 2s
@@ -353,6 +353,115 @@ Channel: &ChannelDefaults
     # description
     Capabilities:
         <<: *ChannelCapabilities
+        
+        ################################################################################
+#
+#   Profile
+#
+#   - Different configuration profiles may be encoded here to be specified
+#   as parameters to the configtxgen tool
+#
+################################################################################
+Profiles:
  
+    FourOrgsLoCGenesis:
+        <<: *ChannelDefaults
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            LoCConsortium:
+                Organizations:
+                    - *Bosch
+                    - *FedEx
+                    - *Walmart
+                   
+    FourOrgsLoCChannel:
+        Consortium: LoCConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                    - *Bosch
+                    - *FedEx
+                    - *Walmart
+            Capabilities:
+                <<: *ApplicationCapabilities
+ 
+    SampleDevModeKafka:
+        <<: *ChannelDefaults
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            OrdererType: kafka
+            Kafka:
+                Brokers:
+                - kafka.sc.com:9092
+ 
+            Organizations:
+            - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+            - <<: *OrdererOrg
+        Consortiums:
+            LoCConsortium:
+                Organizations:
+                    - *Bosch
+                    - *FedEx
+                    - *Walmart
+    SampleMultiNodeEtcdRaft:
+        <<: *ChannelDefaults
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            OrdererType: etcdraft
+            EtcdRaft:
+                Consenters:
+                - Host: orderer.sc.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/sc.com/orderers/orderer.sc.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/sc.com/orderers/orderer.sc.com/tls/server.crt
+                - Host: orderer2.sc.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/sc.com/orderers/orderer2.sc.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/sc.com/orderers/orderer2.sc.com/tls/server.crt
+                - Host: orderer3.sc.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/sc.com/orderers/orderer3.sc.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/sc.com/orderers/orderer3.sc.com/tls/server.crt
+                - Host: orderer4.sc.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/sc.com/orderers/orderer4.sc.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/sc.com/orderers/orderer4.sc.com/tls/server.crt
+                
+            Addresses:
+                - orderer.sc.com:7050
+                - orderer2.sc.com:7050
+                - orderer3.sc.com:7050
+                - orderer4.sc.com:7050
+              
+ 
+            Organizations:
+            - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+            - <<: *OrdererOrg
+        Consortiums:
+            LoCConsortium:
+                Organizations:
+                    - *Bosch
+                    - *FedEx
+                    - *Walmart
     
 
