@@ -1,35 +1,34 @@
 version: '2'
  
 volumes:
-  orderer.loc.com:
-  peer0.intel.loc.com:
-  peer1.intel.loc.com:
-  peer0.lenovo.loc.com:
-  peer1.lenovo.loc.com:
+  orderer.sc.com:
+  peer0.bosch.sc.com:
+  peer1.bosch.sc.com:
   peer0.fedex.loc.com:
   peer1.fedex.loc.com:
-  peer0.govregulator.loc.com:
-  peer1.govregulator.loc.com:
- 
+  peer0.walmart.sc.com:
+  peer1.walmart.sc.com:
+  
+  
 networks:
-  loc:
+  sc:
 services:
-  ca-intel:
+  ca-bosch:
     image: hyperledger/fabric-ca:$IMAGE_TAG
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca-intel
+      - FABRIC_CA_SERVER_CA_NAME=ca-bosch
       - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.intel.loc.com-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA_INTEL_PRIVATE_KEY
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.bosch.sc.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA_BOSCH_PRIVATE_KEY
     ports:
       - "7054:7054"
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.intel.loc.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.bosch.sc.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY -b admin:adminpw -d'
     volumes:
-      - ./crypto-config/peerOrganizations/intel.loc.com/ca/:/etc/hyperledger/fabric-ca-server-config
-    container_name: ca_peerIntel
+      - ./crypto-config/peerOrganizations/bosch.sc.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerBosch
     networks:
-      - loc
+      - sc
  
   ca-lenovo:
     image: hyperledger/fabric-ca:$IMAGE_TAG
