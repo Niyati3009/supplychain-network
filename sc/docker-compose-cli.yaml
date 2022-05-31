@@ -1,90 +1,78 @@
 volumes:
-  orderer.loc.com:
-  peer0.intel.loc.com:
-  peer1.intel.loc.com:
-  peer0.lenovo.loc.com:
-  peer1.lenovo.loc.com:
-  peer0.fedex.loc.com:
-  peer1.fedex.loc.com:
-  peer0.govregulator.loc.com:
-  peer1.govregulator.loc.com:
+  orderer.sc.com:
+  peer0.bosch.sc.com:
+  peer1.bosch.sc.com:
+  peer0.fedex.sc.com:
+  peer1.fedex.sc.com:
+  peer0.walmart.sc.com:
+  peer1.walmart.sc.com:
+ 
+  
  
 networks:
-  loc:
+  sc:
  
 services:
  
-  orderer.loc.com:
+  orderer.sc.com:
     extends:
       file:   base/docker-compose-base.yaml
-      service: orderer.loc.com
-    container_name: orderer.loc.com
+      service: orderer.sc.com
+    container_name: orderer.sc.com
     networks:
-      - loc
+      - sc
  
-  peer0.intel.loc.com:
-    container_name: peer0.intel.loc.com
+  peer0.bosch.sc.com:
+    container_name: peer0.bosch.sc.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.intel.loc.com
+      service: peer0.bosch.sc.com
     networks:
-      - loc
+      - sc
  
-  peer1.intel.loc.com:
-    container_name: peer1.intel.loc.com
+  peer1.bosch.sc.com:
+    container_name: peer1.bosch.sc.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer1.intel.loc.com
+      service: peer1.bosch.sc.com
     networks:
       - loc
- 
-  peer0.lenovo.loc.com:
-    container_name: peer0.lenovo.loc.com
+      
+  peer0.fedex.sc.com:
+    container_name: peer0.fedex.sc.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.lenovo.loc.com
+      service: peer0.fedex.sc.com
     networks:
-      - loc
+      - sc
  
-  peer1.lenovo.loc.com:
-    container_name: peer1.lenovo.loc.com
+  peer1.fedex.sc.com:
+    container_name: peer1.fedex.sc.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer1.lenovo.loc.com
+      service: peer1.fedex.sc.com
     networks:
-      - loc
+      - sc
  
-  peer0.fedex.loc.com:
-    container_name: peer0.fedex.loc.com
+  peer0.walmart.sc.com:
+    container_name: peer0.walmart.sc.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.fedex.loc.com
+      service: peer0.walmart.sc.com
     networks:
-      - loc
+      - sc
  
-  peer1.fedex.loc.com:
-    container_name: peer1.fedex.loc.com
+  peer1.walmart.sc.com:
+    container_name: peer1.walmart.sc.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer1.fedex.loc.com
+      service: peer1.walmart.sc.com
     networks:
-      - loc
+      - sc
  
-  peer0.govregulator.loc.com:
-    container_name: peer0.govregulator.loc.com
-    extends:
-      file:  base/docker-compose-base.yaml
-      service: peer0.govregulator.loc.com
-    networks:
-      - loc
  
-  peer1.govregulator.loc.com:
-    container_name: peer1.govregulator.loc.com
-    extends:
-      file:  base/docker-compose-base.yaml
-      service: peer1.govregulator.loc.com
-    networks:
-      - loc
+ 
+ 
   
   cli:
     container_name: cli
