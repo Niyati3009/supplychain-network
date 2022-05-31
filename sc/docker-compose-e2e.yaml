@@ -1,0 +1,139 @@
+version: '2'
+ 
+volumes:
+  orderer.loc.com:
+  peer0.intel.loc.com:
+  peer1.intel.loc.com:
+  peer0.lenovo.loc.com:
+  peer1.lenovo.loc.com:
+  peer0.fedex.loc.com:
+  peer1.fedex.loc.com:
+  peer0.govregulator.loc.com:
+  peer1.govregulator.loc.com:
+ 
+networks:
+  loc:
+services:
+  ca-intel:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-intel
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.intel.loc.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA_INTEL_PRIVATE_KEY
+    ports:
+      - "7054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.intel.loc.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/intel.loc.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerIntel
+    networks:
+      - loc
+ 
+  ca-lenovo:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-lenovo
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.lenovo.loc.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA_LENOVO_PRIVATE_KEY
+    ports:
+      - "8054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.lenovo.loc.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA_LENOVO_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/lenovo.loc.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerLenovo
+    networks:
+      - loc
+ 
+  ca-fedex:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-fedex
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.fedex.loc.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA_FEDEX_PRIVATE_KEY
+    ports:
+      - "9054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.fedex.loc.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA_FEDEX_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/fedex.loc.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerFedEx
+    networks:
+      - loc
+ 
+  ca-govregulator:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-govregulator
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.govregulator.loc.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA_GOVREGULATOR_PRIVATE_KEY
+    ports:
+      - "10054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.govregulator.loc.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA_GOVREGULATOR_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/govregulator.loc.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerGovRegulator
+    networks:
+      - loc
+ 
+  orderer.loc.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer.loc.com
+    container_name: orderer.loc.com
+    networks:
+      - loc
+ 
+  peer0.intel.loc.com:
+    container_name: peer0.intel.loc.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.intel.loc.com
+    networks:
+      - loc
+ 
+  peer1.intel.loc.com:
+    container_name: peer1.intel.loc.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.intel.loc.com
+    networks:
+      - loc
+ 
+  peer0.lenovo.loc.com:
+    container_name: peer0.lenovo.loc.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.lenovo.loc.com
+    networks:
+      - loc
+ 
+  peer1.lenovo.loc.com:
+    container_name: peer1.lenovo.loc.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.lenovo.loc.com
+    networks:
+      - loc
+ 
+  peer0.fedex.loc.com:
+    container_name: peer0.fedex.loc.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.fedex.loc.com
+    networks:
+      - loc
+ 
+  peer1.fedex.loc.com:
+    container_name: peer1.fedex.loc.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.fedex.loc.com
+    networks:
+      - loc
