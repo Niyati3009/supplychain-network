@@ -60,7 +60,7 @@ services:
     ports:
       - 8051:8051
  
-  peer0.f.loc.com:
+  peer0.fedex.sc.com:
     container_name: peer0.lenovo.loc.com
     extends:
       file: peer-base.yaml
