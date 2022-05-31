@@ -4,8 +4,8 @@ volumes:
   orderer.sc.com:
   peer0.bosch.sc.com:
   peer1.bosch.sc.com:
-  peer0.fedex.loc.com:
-  peer1.fedex.loc.com:
+  peer0.fedex.sc.com:
+  peer1.fedex.sc.com:
   peer0.walmart.sc.com:
   peer1.walmart.sc.com:
   
@@ -29,110 +29,96 @@ services:
     container_name: ca_peerBosch
     networks:
       - sc
- 
-  ca-lenovo:
-    image: hyperledger/fabric-ca:$IMAGE_TAG
-    environment:
-      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca-lenovo
-      - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.lenovo.loc.com-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA_LENOVO_PRIVATE_KEY
-    ports:
-      - "8054:7054"
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.lenovo.loc.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA_LENOVO_PRIVATE_KEY -b admin:adminpw -d'
-    volumes:
-      - ./crypto-config/peerOrganizations/lenovo.loc.com/ca/:/etc/hyperledger/fabric-ca-server-config
-    container_name: ca_peerLenovo
-    networks:
-      - loc
- 
-  ca-fedex:
+      
+    ca-fedex:
     image: hyperledger/fabric-ca:$IMAGE_TAG
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca-fedex
       - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.fedex.loc.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.fedex.sc.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA_FEDEX_PRIVATE_KEY
     ports:
       - "9054:7054"
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.fedex.loc.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA_FEDEX_PRIVATE_KEY -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.fedex.sc.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA_FEDEX_PRIVATE_KEY -b admin:adminpw -d'
     volumes:
-      - ./crypto-config/peerOrganizations/fedex.loc.com/ca/:/etc/hyperledger/fabric-ca-server-config
+      - ./crypto-config/peerOrganizations/fedex.sc.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca_peerFedEx
     networks:
       - loc
  
-  ca-govregulator:
+  ca-walmart:
     image: hyperledger/fabric-ca:$IMAGE_TAG
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca-govregulator
+      - FABRIC_CA_SERVER_CA_NAME=ca-walmart
       - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.govregulator.loc.com-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA_GOVREGULATOR_PRIVATE_KEY
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.walmart.sc.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA_WALMART_PRIVATE_KEY
     ports:
-      - "10054:7054"
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.govregulator.loc.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA_GOVREGULATOR_PRIVATE_KEY -b admin:adminpw -d'
+      - "8054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.walmart.sc.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA_LENOVO_PRIVATE_KEY -b admin:adminpw -d'
     volumes:
-      - ./crypto-config/peerOrganizations/govregulator.loc.com/ca/:/etc/hyperledger/fabric-ca-server-config
-    container_name: ca_peerGovRegulator
+      - ./crypto-config/peerOrganizations/walmart.sc.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerWalmart
     networks:
       - loc
  
-  orderer.loc.com:
+ 
+  orderer.sc.com:
     extends:
       file:   base/docker-compose-base.yaml
-      service: orderer.loc.com
-    container_name: orderer.loc.com
+      service: orderer.sc.com
+    container_name: orderer.sc.com
     networks:
-      - loc
+      - sc
  
-  peer0.intel.loc.com:
-    container_name: peer0.intel.loc.com
+  peer0.bosch.sc.com:
+    container_name: peer0.bosch.sc.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.intel.loc.com
+      service: peer0.bosch.sc.com
     networks:
-      - loc
+      - sc
  
-  peer1.intel.loc.com:
-    container_name: peer1.intel.loc.com
+  peer1.bosch.sc.com:
+    container_name: peer1.bosch.sc.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer1.intel.loc.com
+      service: peer1.bosch.sc.com
     networks:
       - loc
- 
-  peer0.lenovo.loc.com:
-    container_name: peer0.lenovo.loc.com
+      
+   peer0.fedex.sc.com:
+    container_name: peer0.fedex.sc.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.lenovo.loc.com
+      service: peer0.fedex.sc.com
     networks:
-      - loc
+      - sc
  
-  peer1.lenovo.loc.com:
-    container_name: peer1.lenovo.loc.com
+  peer1.fedex.sc.com:
+    container_name: peer1.fedex.sc.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer1.lenovo.loc.com
+      service: peer1.fedex.sc.com
     networks:
-      - loc
+      - sc
  
-  peer0.fedex.loc.com:
-    container_name: peer0.fedex.loc.com
+  peer0.walmart.sc.com:
+    container_name: peer0.walmart.sc.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.fedex.loc.com
+      service: peer0.walmart.sc.com
     networks:
-      - loc
+      - sc
  
-  peer1.fedex.loc.com:
-    container_name: peer1.fedex.loc.com
+  peer1.walmart.sc.com:
+    container_name: peer1.walmart.sc.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer1.fedex.loc.com
+      service: peer1.walmart.sc.com
     networks:
-      - loc
+      - sc
+ 
+  
