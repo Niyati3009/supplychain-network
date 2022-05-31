@@ -19,7 +19,7 @@ Organizations:
         ID: OrdererMSP
  
         # MSPDir is the filesystem path which contains the MSP configuration
-        MSPDir: crypto-config/ordererOrganizations/loc.com/msp
+        MSPDir: crypto-config/ordererOrganizations/sc.com/msp
  
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -35,15 +35,15 @@ Organizations:
                 Type: Signature
                 Rule: "OR('OrdererMSP.admin')"
  
-    - &Intel
+    - &Bosch
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
-        Name: IntelMSP
+        Name: BoschMSP
  
         # ID to load the MSP definition as
-        ID: IntelMSP
+        ID: BoschMSP
  
-        MSPDir: crypto-config/peerOrganizations/intel.loc.com/msp
+        MSPDir: crypto-config/peerOrganizations/bosch.sc.com/msp
  
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -51,53 +51,22 @@ Organizations:
         Policies:
             Readers:
                 Type: Signature
-                Rule: "OR('IntelMSP.admin', 'IntelMSP.peer', 'IntelMSP.client')"
+                Rule: "OR('BoschMSP.admin', 'BoschMSP.peer', 'BoschMSP.client')"
             Writers:
                 Type: Signature
-                Rule: "OR('IntelMSP.admin', 'IntelMSP.client')"
+                Rule: "OR('BoschMSP.admin', 'BoschMSP.client')"
             Admins:
                 Type: Signature
-                Rule: "OR('IntelMSP.admin')"
+                Rule: "OR('BoschMSP.admin')"
  
         # leave this flag set to true.
         AnchorPeers:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.intel.loc.com
+            - Host: peer0.bosch.sc.com
               Port: 7051
- 
-    - &Lenovo
-        # DefaultOrg defines the organization which is used in the sampleconfig
-        # of the fabric.git development environment
-        Name: LenovoMSP
- 
-        # ID to load the MSP definition as
-        ID: LenovoMSP
- 
-        MSPDir: crypto-config/peerOrganizations/lenovo.loc.com/msp
- 
-        # Policies defines the set of policies at this level of the config tree
-        # For organization policies, their canonical path is usually
-        #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR('LenovoMSP.admin', 'LenovoMSP.peer', 'LenovoMSP.client')"
-            Writers:
-                Type: Signature
-                Rule: "OR('LenovoMSP.admin', 'LenovoMSP.client')"
-            Admins:
-                Type: Signature
-                Rule: "OR('LenovoMSP.admin')"
- 
-        AnchorPeers:
-            # AnchorPeers defines the location of peers which can be used
-            # for cross org gossip communication.  Note, this value is only
-            # encoded in the genesis block in the Application section context
-            - Host: peer0.lenovo.loc.com
-              Port: 9051
- 
+              
     - &FedEx
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
@@ -106,7 +75,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: FedExMSP
  
-        MSPDir: crypto-config/peerOrganizations/fedex.loc.com/msp
+        MSPDir: crypto-config/peerOrganizations/fedex.sc.com/msp
  
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -126,18 +95,19 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.fedex.loc.com
-              Port: 11051
+            - Host: peer0.fedex.sc.com
+              Port: 9051
  
-    - &GovRegulator
+ 
+    - &Walmart
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
-        Name: GovRegulatorMSP
+        Name: WalmartMSP
  
         # ID to load the MSP definition as
-        ID: GovRegulatorMSP
+        ID: WalmartMSP
  
-        MSPDir: crypto-config/peerOrganizations/govregulator.loc.com/msp
+        MSPDir: crypto-config/peerOrganizations/walmart.sc.com/msp
  
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -145,17 +115,20 @@ Organizations:
         Policies:
             Readers:
                 Type: Signature
-                Rule: "OR('GovRegulatorMSP.admin', 'GovRegulatorMSP.peer', 'GovRegulatorMSP.client')"
+                Rule: "OR('WalmartMSP.admin', 'WalmartMSP.peer', 'WalmartMSP.client')"
             Writers:
                 Type: Signature
-                Rule: "OR('GovRegulatorMSP.admin', 'GovRegulatorMSP.client')"
+                Rule: "OR('WalmartMSP.admin', 'WalmartMSP.client')"
             Admins:
                 Type: Signature
-                Rule: "OR('GovRegulatorMSP.admin')"
+                Rule: "OR('WalmartMSP.admin')"
  
         AnchorPeers:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.govregulator.loc.com
-              Port: 13051
+            - Host: peer0.walmart.sc.com
+              Port: 11051
+ 
+    
+
