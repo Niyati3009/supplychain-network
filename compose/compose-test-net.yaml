@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-version: '3.7'
+version: '3.2'
 
 volumes:
   orderer.sc.com:
@@ -44,7 +44,7 @@ services:
       - ORDERER_ADMIN_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
       - ORDERER_ADMIN_TLS_CLIENTROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
       - ORDERER_ADMIN_LISTENADDRESS=0.0.0.0:7053
-      - ORDERER_OPERATIONS_LISTENADDRESS=orderer.example.com:9443
+      - ORDERER_OPERATIONS_LISTENADDRESS=orderer.sc.com:9443
       - ORDERER_METRICS_PROVIDER=prometheus
     working_dir: /root
     command: orderer
