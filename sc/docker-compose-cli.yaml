@@ -73,8 +73,7 @@ services:
  
  
  
-  
-  cli:
+ cli:
     container_name: cli
     image: hyperledger/fabric-tools:$IMAGE_TAG
     tty: true
@@ -86,15 +85,20 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=cli
-      - CORE_PEER_ADDRESS=peer0.intel.loc.com:7051
-      - CORE_PEER_LOCALMSPID=IntelMSP
+      - CORE_PEER_ADDRESS=peer0.bosch.sc.com:7051
+      - CORE_PEER_SCALMSPID=BoschMSP
       - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/intel.loc.com/peers/peer0.intel.loc.com/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/intel.loc.com/peers/peer0.intel.loc.com/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/intel.loc.com/peers/peer0.intel.loc.com/tls/ca.crt
-      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/intel.loc.com/users/Admin@intel.loc.com/msp
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/bosch.sc.com/peers/peer0.bosch.sc.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/bosch.sc.com/peers/peer0.bosch.sc.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/bosch.sc.com/peers/peer0.bosch.sc.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/bosch.sc.com/users/Admin@bosch.sc.com/msp
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash
+    
+    
+    
+    
+    
     volumes:
         - /var/run/:/host/var/run/
         - ./../chaincode/:/opt/gopath/src/github.com/chaincode
@@ -102,17 +106,15 @@ services:
         - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
         - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
-      - orderer.loc.com
-      - peer0.intel.loc.com
-      - peer1.intel.loc.com
-      - peer0.lenovo.loc.com
-      - peer1.lenovo.loc.com
-      - peer0.fedex.loc.com
-      - peer1.fedex.loc.com
-      - peer0.govregulator.loc.com
-      - peer1.govregulator.loc.com
+      - orderer.sc.com
+      - peer0.bosch.sc.com
+      - peer1.bosch.sc.com
+      - peer0.fedex.sc.com
+      - peer1.fedex.sc.com
+      - peer0.walmart.sc.com
+      - peer1.walmart.sc.com
     networks:
-      - loc
+      - sc
  
   chaincode:
     container_name: chaincode
@@ -123,8 +125,8 @@ services:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - FABRIC_LOGGING_SPEC=DEBUG
       - CORE_PEER_ID=chaincode
-      - CORE_PEER_ADDRESS=peer0.intel.loc.com:7051
-      - CORE_PEER_LOCALMSPID=IntelMSP
+      - CORE_PEER_ADDRESS=peer0.bosch.sc.com:7051
+      - CORE_PEER_SCALMSPID=BoschMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
     working_dir: /opt/gopath/src/chaincode
     command: /bin/sh -c 'sleep 6000000'
@@ -133,12 +135,14 @@ services:
         - ./msp:/etc/hyperledger/msp
         - ./../chaincode:/opt/gopath/src/chaincode
     depends_on:
-      - orderer.loc.com
-      - peer0.intel.loc.com
-      - peer1.intel.loc.com
-      - peer0.lenovo.loc.com
-      - peer1.lenovo.loc.com
-      - peer0.fedex.loc.com
-      - peer1.fedex.loc.com
-      - peer0.govregulator.loc.com
-      - peer1.govregulator.loc.com
+      - orderer.sc.com
+      - peer0.bosch.sc.com
+      - peer1.bosch.sc.com
+       - peer0.fedex.sc.com
+      - peer1.fedex.sc.com
+      - peer0.walmart.sc.com
+      - peer1.walmart.sc.com
+
+
+
+  
