@@ -80,3 +80,44 @@ describe('DigitalLandTitle', () => {
         // Connect to the business network using the network admin identity
         await businessNetworkConnection.connect(adminCardName);
     });
+describe('#onRegisterPropertyForSale', () => {
+
+        it('should change the forSale flag from undefined to true', async () => {
+
+            // Create the existing LandTitle asset.
+            let factory = businessNetworkConnection.getBusinessNetwork().getFactory();
+
+            let seller = factory.newResource('net.biz.digitalPropertyNetwork', 'Person', 'P1');
+            seller. firstName = 'Dan';
+            seller.lastName = 'Selman';
+
+            let landTitle = factory.newResource('net.biz.digitalPropertyNetwork', 'LandTitle', 'TITLE_1');
+            let person = factory.newRelationship('net.biz.digitalPropertyNetwork', 'Person', 'P1');
+            landTitle.owner = person;
+            landTitle.information = 'Some information';
+            landTitle.forSale = false;
+
+            // Create the transaction.
+            let transaction = factory.newTransaction('net.biz.digitalPropertyNetwork', 'RegisterPropertyForSale');
+            transaction.title = factory.newRelationship('net.biz.digitalPropertyNetwork', 'LandTitle', 'TITLE_1');
+            transaction.seller = person;
+
+            // Get the asset registry.
+            const personRegistry = await businessNetworkConnection.getParticipantRegistry('net.biz.digitalPropertyNetwork.Person');
+            await personRegistry.add(seller);
+
+            // Add the LandTitle asset to the asset registry.
+            const assetRegistry = await businessNetworkConnection.getAssetRegistry('net.biz.digitalPropertyNetwork.LandTitle');
+            await assetRegistry.add(landTitle);
+
+            // Submit the transaction.
+            await businessNetworkConnection.submitTransaction(transaction);
+
+            // Get the modified land title.
+            const modifiedLandTitle = await assetRegistry.get('TITLE_1');
+
+            // Ensure the LandTitle has been modified correctly.
+            modifiedLandTitle.forSale.should.be.true;
+        });
+    });
+})
